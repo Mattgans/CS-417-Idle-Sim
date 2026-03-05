@@ -61,8 +61,8 @@ public class ResourceTree : MonoBehaviour
 
     void ResetTree()
     {
-        //        hitsRemaining = Random.Range(3, 6);
-        hitsRemaining = 1;
+        hitsRemaining = Random.Range(3, 6);
+        //hitsRemaining = 1;
         isAvailable = true;
         canBeHit = true;
         
