@@ -3,12 +3,15 @@ using System.Collections;
 
 public class ResourceTree : MonoBehaviour
 {
+    [Header("Resource Settings")]
     public int woodYield = 10;
     public float respawnTime = 10f;
     public float hitCooldown = 0.5f;
 
+    [Header("Visuals")]
     public GameObject fullTreeModel;
     public GameObject cutWoodModel;
+    public Animator treeAnimator; // Drag the Animator component here
 
     private int hitsRemaining;
     private bool isAvailable = true;
@@ -18,6 +21,11 @@ public class ResourceTree : MonoBehaviour
     void Start()
     {
         treeCollider = GetComponent<Collider>();
+        
+        // If you didn't assign the animator in the inspector, try to find it
+        if (treeAnimator == null) 
+            treeAnimator = GetComponentInChildren<Animator>();
+
         ResetTree();
     }
 
@@ -27,6 +35,13 @@ public class ResourceTree : MonoBehaviour
 
         hitsRemaining--;
         Debug.Log("Tree Hit! Hits left: " + hitsRemaining);
+
+        // --- NEW: Trigger the animation ---
+        if (treeAnimator != null)
+        {
+            treeAnimator.Play("tree_wig", 0, 0f); 
+            // The 0, 0f restart the animation from the beginning if hit rapidly
+        }
 
         if (hitsRemaining <= 0)
         {
@@ -62,7 +77,6 @@ public class ResourceTree : MonoBehaviour
     void ResetTree()
     {
         hitsRemaining = Random.Range(3, 6);
-        //hitsRemaining = 1;
         isAvailable = true;
         canBeHit = true;
         

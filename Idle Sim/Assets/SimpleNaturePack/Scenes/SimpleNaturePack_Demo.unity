@@ -3632,7 +3632,10 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1835261571584425493, guid: 60f79905accf3b24fa0114b941f1aac0, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5089877098680381616, guid: 60f79905accf3b24fa0114b941f1aac0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 166771718}
   m_SourcePrefab: {fileID: 100100000, guid: 60f79905accf3b24fa0114b941f1aac0, type: 3}
 --- !u!1 &166771715 stripped
 GameObject:
@@ -3644,6 +3647,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9069115365609054727, guid: 60f79905accf3b24fa0114b941f1aac0, type: 3}
   m_PrefabInstance: {fileID: 166771714}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &166771717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5089877098680381616, guid: 60f79905accf3b24fa0114b941f1aac0, type: 3}
+  m_PrefabInstance: {fileID: 166771714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &166771718
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166771717}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e957d4a434bc80d4ebc77d7700126d7c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &169370180
 GameObject:
   m_ObjectHideFlags: 0
@@ -12659,6 +12689,7 @@ MonoBehaviour:
   hitCooldown: 0.5
   fullTreeModel: {fileID: 166771715}
   cutWoodModel: {fileID: 1543190777}
+  treeAnimator: {fileID: 166771718}
 --- !u!4 &846858064
 Transform:
   m_ObjectHideFlags: 0
@@ -34404,6 +34435,7 @@ MonoBehaviour:
   hitCooldown: 0.5
   fullTreeModel: {fileID: 1848333840}
   cutWoodModel: {fileID: 164572289}
+  treeAnimator: {fileID: 0}
 --- !u!4 &2099956163
 Transform:
   m_ObjectHideFlags: 0
