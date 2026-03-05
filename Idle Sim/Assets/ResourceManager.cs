@@ -4,19 +4,41 @@ using TMPro;
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance;
-    public int woodCount = 0;
-    public TextMeshProUGUI woodText;
 
-    void Awake() => Instance = this;
+    [Header("Oak Settings")]
+    public int oakCount = 0;
+    public TextMeshProUGUI oakText;
 
-    public void AddWood(int amount)
+    [Header("Maple Settings")]
+    public int mapleCount = 0;
+    public TextMeshProUGUI mapleText;
+
+    void Awake()
     {
-        woodCount += amount;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    void Start()
+    {
+        UpdateUI();
+    }
+
+    public void AddOak(int amount)
+    {
+        oakCount += amount;
+        UpdateUI();
+    }
+
+    public void AddMaple(int amount)
+    {
+        mapleCount += amount;
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        if (woodText != null) woodText.text = "Wood: " + woodCount;
+        if (oakText != null) oakText.text = $"Oak: {oakCount}";
+        if (mapleText != null) mapleText.text = $"Maple: {mapleCount}";
     }
 }
