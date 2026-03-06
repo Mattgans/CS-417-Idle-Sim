@@ -13264,7 +13264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 84.8, y: -50}
+  m_AnchoredPosition: {x: 84.8, y: 15}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879501513
@@ -13311,18 +13311,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 791056708}
-        m_TargetAssemblyTypeName: HouseToggler, Assembly-CSharp
-        m_MethodName: ToggleHouse
-        m_Mode: 1
+      - m_Target: {fileID: 1904426626}
+        m_TargetAssemblyTypeName: TycoonManager, Assembly-CSharp
+        m_MethodName: TryPurchaseMapleHouse
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 791056708}
+          m_ObjectArgumentAssemblyTypeName: HouseToggler, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &879501514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14230,9 +14230,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1507019535}
-        m_TargetAssemblyTypeName: HouseToggler, Assembly-CSharp
-        m_MethodName: ToggleHouse
+      - m_Target: {fileID: 1904426626}
+        m_TargetAssemblyTypeName: TycoonManager, Assembly-CSharp
+        m_MethodName: UpgradeOakMultiplier
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14241,7 +14241,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &921997271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28995,7 +28995,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 84.8, y: 15}
+  m_AnchoredPosition: {x: 84.8, y: -50}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1826341698
@@ -29042,18 +29042,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 89067044}
-        m_TargetAssemblyTypeName: HouseToggler, Assembly-CSharp
-        m_MethodName: ToggleHouse
-        m_Mode: 1
+      - m_Target: {fileID: 1904426626}
+        m_TargetAssemblyTypeName: TycoonManager, Assembly-CSharp
+        m_MethodName: TryPurchaseOakHouse
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 89067044}
+          m_ObjectArgumentAssemblyTypeName: HouseToggler, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &1826341699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30353,18 +30353,18 @@ MonoBehaviour:
   oakGenBaseCost: 10
   oakGenCount: 0
   oakProductionMultiplier: 1
-  oakCostText: {fileID: 0}
-  oakMultText: {fileID: 0}
+  oakGenCostText: {fileID: 1677046651}
+  oakMultText: {fileID: 2018809310}
   oakGenModels:
   - {fileID: 1327524106}
   - {fileID: 500046196}
   - {fileID: 2040124168}
   - {fileID: 1416262970}
-  mapleGenBaseCost: 50
+  mapleGenBaseCost: 10
   mapleGenCount: 0
   mapleProductionMultiplier: 1
-  mapleCostText: {fileID: 0}
-  mapleMultText: {fileID: 0}
+  mapleGenCostText: {fileID: 1426956790}
+  mapleMultText: {fileID: 637393779}
   mapleGenModels:
   - {fileID: 2052770896}
   - {fileID: 2000867298}
@@ -30372,8 +30372,6 @@ MonoBehaviour:
   - {fileID: 1612634351}
   oakHouseCost: 5000
   mapleHouseCost: 5000
-  oakHouseModel: {fileID: 0}
-  mapleHouseModel: {fileID: 0}
 --- !u!1 &1905700256
 GameObject:
   m_ObjectHideFlags: 0
@@ -33419,9 +33417,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1723166603}
-        m_TargetAssemblyTypeName: HouseToggler, Assembly-CSharp
-        m_MethodName: ToggleHouse
+      - m_Target: {fileID: 1904426626}
+        m_TargetAssemblyTypeName: TycoonManager, Assembly-CSharp
+        m_MethodName: UpgradeMapleMultiplier
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33430,7 +33428,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &2044416106
 MonoBehaviour:
   m_ObjectHideFlags: 0
