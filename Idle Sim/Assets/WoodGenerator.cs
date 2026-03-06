@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OakGenerator : MonoBehaviour
 {
-    public int oakPerTick = 10;
+    public int baseOakPerTick = 10;
     public float tickInterval = 5f;
     private float timer;
 
@@ -12,9 +12,13 @@ public class OakGenerator : MonoBehaviour
 
         if (timer >= tickInterval)
         {
-            if (ResourceManager.Instance != null)
+            if (ResourceManager.Instance != null && TycoonManager.Instance != null)
             {
-                ResourceManager.Instance.AddOak(oakPerTick);
+                // Multiply the base rate by the current Tycoon multiplier
+                float multiplier = TycoonManager.Instance.oakProductionMultiplier;
+                int totalProduced = Mathf.RoundToInt(baseOakPerTick * multiplier);
+                
+                ResourceManager.Instance.AddOak(totalProduced);
             }
             timer = 0f;
         }

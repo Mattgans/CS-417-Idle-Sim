@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MapleGenerator : MonoBehaviour
 {
-    public int oakPerTick = 10;
+    public int baseMaplePerTick = 10;
     public float tickInterval = 5f;
     private float timer;
 
@@ -12,9 +12,13 @@ public class MapleGenerator : MonoBehaviour
 
         if (timer >= tickInterval)
         {
-            if (ResourceManager.Instance != null)
+            if (ResourceManager.Instance != null && TycoonManager.Instance != null)
             {
-                ResourceManager.Instance.AddMaple(oakPerTick);
+                // Multiply the base rate by the current Tycoon multiplier
+                float multiplier = TycoonManager.Instance.mapleProductionMultiplier;
+                int totalProduced = Mathf.RoundToInt(baseMaplePerTick * multiplier);
+                
+                ResourceManager.Instance.AddMaple(totalProduced);
             }
             timer = 0f;
         }
