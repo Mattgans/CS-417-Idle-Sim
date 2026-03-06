@@ -5,33 +5,31 @@ public class TycoonManager : MonoBehaviour
 {
     public static TycoonManager Instance;
 
-    [Header("Purchase Math")]
-    [Tooltip("The cost increases by this factor after every purchase.")]
-    public float priceMultiplier = 1.5f; 
+    [Header("Global Settings")]
+    [Tooltip("How much the cost increases each time you buy a generator (1.5 = 50% increase).")]
+    public float priceMultiplier = 1.5f;
 
-    [Header("Oak Generator Settings")]
+    [Header("Oak Logic")]
     public int oakGenBaseCost = 10;
     public int oakGenCount = 0;
-    public float oakProductionMultiplier = 1f;
+    public float oakProductionMultiplier = 1.0f;
     [Space]
-    public TextMeshProUGUI oakCostText;
+    public TextMeshProUGUI oakGenCostText;
     public TextMeshProUGUI oakMultText;
-    public GameObject[] oakGenModels; // Assign your 4 Oak Generator objects here
+    public GameObject[] oakGenModels; // Ensure size is 4
 
-    [Header("Maple Generator Settings")]
+    [Header("Maple Logic")]
     public int mapleGenBaseCost = 50;
     public int mapleGenCount = 0;
-    public float mapleProductionMultiplier = 1f;
+    public float mapleProductionMultiplier = 1.0f;
     [Space]
-    public TextMeshProUGUI mapleCostText;
+    public TextMeshProUGUI mapleGenCostText;
     public TextMeshProUGUI mapleMultText;
-    public GameObject[] mapleGenModels; // Assign your 4 Maple Generator objects here
+    public GameObject[] mapleGenModels; // Ensure size is 4
 
-    [Header("End Game Goals")]
+    [Header("House Settings")]
     public int oakHouseCost = 5000;
     public int mapleHouseCost = 5000;
-    public GameObject oakHouseModel;
-    public GameObject mapleHouseModel;
 
     void Awake()
     {
@@ -44,12 +42,12 @@ public class TycoonManager : MonoBehaviour
         UpdateTycoonUI();
     }
 
-    // --- OAK LOGIC ---
+    // --- OAK PURCHASES ---
 
     public void BuyOakGenerator()
     {
-        int currentCost = GetCurrentCost(oakGenBaseCost, oakGenCount);
-        
+        int currentCost = GetExponentialCost(oakGenBaseCost, oakGenCount);
+
         if (ResourceManager.Instance.oakCount >= currentCost && oakGenCount < 4)
         {
             ResourceManager.Instance.AddOak(-currentCost);
@@ -61,20 +59,23 @@ public class TycoonManager : MonoBehaviour
 
     public void UpgradeOakMultiplier()
     {
-        // Simple logic: upgrade costs 100 Oak, gives +0.5x, max 10x
-        if (ResourceManager.Instance.oakCount >= 100 && oakProductionMultiplier < 10f)
+        // Cost: 100 for 1x->2x, 200 for 2x->3x, etc.
+        int currentLevel = Mathf.FloorToInt(oakProductionMultiplier);
+        int upgradeCost = currentLevel * 100;
+
+        if (ResourceManager.Instance.oakCount >= upgradeCost && oakProductionMultiplier < 5.0f)
         {
-            ResourceManager.Instance.AddOak(-100);
-            oakProductionMultiplier += 0.5f;
+            ResourceManager.Instance.AddOak(-upgradeCost);
+            oakProductionMultiplier += 1.0f;
             UpdateTycoonUI();
         }
     }
 
-    // --- MAPLE LOGIC ---
+    // --- MAPLE PURCHASES ---
 
     public void BuyMapleGenerator()
     {
-        int currentCost = GetCurrentCost(mapleGenBaseCost, mapleGenCount);
+        int currentCost = GetExponentialCost(mapleGenBaseCost, mapleGenCount);
 
         if (ResourceManager.Instance.mapleCount >= currentCost && mapleGenCount < 4)
         {
@@ -87,52 +88,72 @@ public class TycoonManager : MonoBehaviour
 
     public void UpgradeMapleMultiplier()
     {
-        if (ResourceManager.Instance.mapleCount >= 100 && mapleProductionMultiplier < 10f)
+        int currentLevel = Mathf.FloorToInt(mapleProductionMultiplier);
+        int upgradeCost = currentLevel * 100;
+
+        if (ResourceManager.Instance.mapleCount >= upgradeCost && mapleProductionMultiplier < 5.0f)
         {
-            ResourceManager.Instance.AddMaple(-100);
-            mapleProductionMultiplier += 0.5f;
+            ResourceManager.Instance.AddMaple(-upgradeCost);
+            mapleProductionMultiplier += 1.0f;
             UpdateTycoonUI();
         }
     }
 
-    // --- END GAME PURCHASES ---
+    // --- HOUSE PURCHASES (Linking to your HouseToggler) ---
 
-    public void BuyOakHouse()
+    public void TryPurchaseOakHouse(HouseToggler toggler)
     {
         if (ResourceManager.Instance.oakCount >= oakHouseCost)
         {
             ResourceManager.Instance.AddOak(-oakHouseCost);
-            oakHouseModel.SetActive(true);
+            toggler.EnableHouse();
+        }
+        else
+        {
+            Debug.Log("Not enough Oak for the house!");
         }
     }
 
-    public void BuyMapleHouse()
+    public void TryPurchaseMapleHouse(HouseToggler toggler)
     {
         if (ResourceManager.Instance.mapleCount >= mapleHouseCost)
         {
             ResourceManager.Instance.AddMaple(-mapleHouseCost);
-            mapleHouseModel.SetActive(true);
+            toggler.EnableHouse();
+        }
+        else
+        {
+            Debug.Log("Not enough Maple for the house!");
         }
     }
 
-    // --- UTILS ---
+    // --- UTILITIES ---
 
-    private int GetCurrentCost(int baseCost, int count)
+    private int GetExponentialCost(int baseCost, int ownedCount)
     {
-        // Exponential Formula: BaseCost * (Multiplier ^ NumberOwned)
-        return Mathf.RoundToInt(baseCost * Mathf.Pow(priceMultiplier, count));
+        return Mathf.RoundToInt(baseCost * Mathf.Pow(priceMultiplier, ownedCount));
     }
 
-    void UpdateTycoonUI()
+    public void UpdateTycoonUI()
     {
-        if (oakCostText != null) 
-            oakCostText.text = $"Cost: {GetCurrentCost(oakGenBaseCost, oakGenCount)} Oak";
-        if (oakMultText != null) 
-            oakMultText.text = $"Mult: {oakProductionMultiplier}x";
+        // Oak UI
+        if (oakGenCostText != null)
+            oakGenCostText.text = oakGenCount >= 4 ? "MAX" : $"Cost: {GetExponentialCost(oakGenBaseCost, oakGenCount)} Oak";
+        
+        if (oakMultText != null)
+        {
+            if (oakProductionMultiplier >= 5.0f) oakMultText.text = "5x (MAX)";
+            else oakMultText.text = $"{oakProductionMultiplier}x (Next: {Mathf.FloorToInt(oakProductionMultiplier) * 100} Oak)";
+        }
 
-        if (mapleCostText != null) 
-            mapleCostText.text = $"Cost: {GetCurrentCost(mapleGenBaseCost, mapleGenCount)} Maple";
-        if (mapleMultText != null) 
-            mapleMultText.text = $"Mult: {mapleProductionMultiplier}x";
+        // Maple UI
+        if (mapleGenCostText != null)
+            mapleGenCostText.text = mapleGenCount >= 4 ? "MAX" : $"Cost: {GetExponentialCost(mapleGenBaseCost, mapleGenCount)} Maple";
+
+        if (mapleMultText != null)
+        {
+            if (mapleProductionMultiplier >= 5.0f) mapleMultText.text = "5x (MAX)";
+            else mapleMultText.text = $"{mapleProductionMultiplier}x (Next: {Mathf.FloorToInt(mapleProductionMultiplier) * 100} Maple)";
+        }
     }
 }
