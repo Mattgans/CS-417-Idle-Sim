@@ -138,22 +138,30 @@ public class TycoonManager : MonoBehaviour
     {
         // Oak UI
         if (oakGenCostText != null)
-            oakGenCostText.text = oakGenCount >= 4 ? "MAX" : $"Cost: {GetExponentialCost(oakGenBaseCost, oakGenCount)} Oak";
+        {
+            string costText = oakGenCount >= 4 ? "MAX" : $"{GetExponentialCost(oakGenBaseCost, oakGenCount)} Oak";
+            oakGenCostText.text = $"Oak Generator\nCost: {costText}";
+        }
         
         if (oakMultText != null)
         {
-            if (oakProductionMultiplier >= 5.0f) oakMultText.text = "5x (MAX)";
-            else oakMultText.text = $"{oakProductionMultiplier}x (Next: {Mathf.FloorToInt(oakProductionMultiplier) * 100} Oak)";
+            float nextCost = Mathf.FloorToInt(oakProductionMultiplier) * 100;
+            string costDisplay = oakProductionMultiplier >= 5.0f ? "MAX" : $"{nextCost} Oak";
+            oakMultText.text = $"Oak Generator Multiplier\nCost: {costDisplay}\nCurrent: {oakProductionMultiplier}x";
         }
 
         // Maple UI
         if (mapleGenCostText != null)
-            mapleGenCostText.text = mapleGenCount >= 4 ? "MAX" : $"Cost: {GetExponentialCost(mapleGenBaseCost, mapleGenCount)} Maple";
+        {
+            string costText = mapleGenCount >= 4 ? "MAX" : $"{GetExponentialCost(mapleGenBaseCost, mapleGenCount)} Maple";
+            mapleGenCostText.text = $"Maple Generator\nCost: {costText}";
+        }
 
         if (mapleMultText != null)
         {
-            if (mapleProductionMultiplier >= 5.0f) mapleMultText.text = "5x (MAX)";
-            else mapleMultText.text = $"{mapleProductionMultiplier}x (Next: {Mathf.FloorToInt(mapleProductionMultiplier) * 100} Maple)";
+            float nextCost = Mathf.FloorToInt(mapleProductionMultiplier) * 100;
+            string costDisplay = mapleProductionMultiplier >= 5.0f ? "MAX" : $"{nextCost} Maple";
+            mapleMultText.text = $"Maple Generator Multiplier\nCost: {costDisplay}\nCurrent: {mapleProductionMultiplier}x";
         }
     }
 }
